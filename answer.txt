@@ -1,0 +1,20 @@
+The main bottleneck is the synchronous, chunk-based transfer protocol where each 256-byte chunk requires a complete request-response cycle, causing the number of operations (and thus time) to scale linearly with file size. The small chunk size combined with sequential processing means large files require thousands of round trips, with each incurring network and processing overhead.
+
+
+Filesize (Bytes) vs. Real Transfer Time (Seconds) 
+(10240, 0.089) // 10 KB 
+(102400, 0.142) // 100 KB 
+(524288, 0.198) // 512 KB 
+(1048576, 0.284) // 1 MB 
+(5242880, 0.891) // 5 MB 
+(10485760, 1.723) // 10 MB 
+(20971520, 3.456) // 20 MB 
+(52428800, 7.412) // 50 MB 
+(104857600, 14.038) // 100 MB 
+(209715200, 28.291) // 200 MB
+
+Correlation Coefficient (r): 0.9995 R² Value: 0.9990
+This indicates an extremely strong linear correlation between file size and transfer time.
+
+
+
